@@ -2,6 +2,8 @@ package com.yuhr.ecommerce.service;
 
 import java.util.Optional;
 
+import org.springframework.stereotype.Service;
+
 import com.yuhr.ecommerce.model.Producto;
 
 public interface ProductoService {

@@ -3,10 +3,12 @@ package com.yuhr.ecommerce.service;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.yuhr.ecommerce.model.Producto;
 import com.yuhr.ecommerce.repository.ProductoRepository;
 
+@Service
 public class ProductoServiceImpl implements ProductoService{
 
     @Autowired
