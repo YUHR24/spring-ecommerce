@@ -89,7 +89,7 @@ public class ProductoController {
 
             String nombreImagen = upload.saveImage(file);
             producto.setImagen(nombreImagen);
-        }
+        } 
 
         producto.setUsuario(p.getUsuario());
         productoService.update(producto);
