@@ -33,7 +33,6 @@ public class UploadFileService {
         String ruta = "images//";
         File file = new File(ruta + nombre) ;
         file.delete();
-
         
     }
 
