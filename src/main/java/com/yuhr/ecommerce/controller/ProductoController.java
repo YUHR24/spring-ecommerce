@@ -1,17 +1,22 @@
 package com.yuhr.ecommerce.controller;
 
+import java.util.Optional;
+
 import org.slf4j.*;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.yuhr.ecommerce.model.Producto;
 import com.yuhr.ecommerce.model.Usuario;
 import com.yuhr.ecommerce.service.ProductoService;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 @Controller
 @RequestMapping("/productos")
@@ -39,10 +44,26 @@ public class ProductoController {
         Usuario usuario = new Usuario(1, "", "", "", "", "", "", "");
         producto.setUsuario(usuario);
         productoService.save(producto);
-        return "redirect:/productos";     
+        return "redirect:/productos";
     }
 
+    @GetMapping("/edit/{id}")
+    public String edit(@PathVariable Integer id, Model model) {
+        Producto producto = new Producto();
+        Optional<Producto> optionalProducto = productoService.get(id);
+        producto = optionalProducto.get();
 
+        LOGGER.info("Producto buscado {}", producto);
 
+        model.addAttribute("producto", producto);
 
+        return "productos/edit";
+    }
+
+    @PostMapping("/update")
+    public String update(Producto producto) {
+       productoService.update(producto);
+
+       return "redirect:/productos";
+    }
 }
