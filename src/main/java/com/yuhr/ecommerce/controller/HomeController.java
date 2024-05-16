@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.yuhr.ecommerce.model.Producto;
 import com.yuhr.ecommerce.service.ProductoService;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 @RequestMapping("/")
@@ -44,5 +45,13 @@ public class HomeController {
 
         return "usuario/productohome";
     }
+
+    @PostMapping("/cart")
+    public String addCart() {
+        
+        
+        return "usuario/carrito";
+    }
+    
 
 }
