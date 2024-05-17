@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.yuhr.ecommerce.model.DetalleOrden;
 import com.yuhr.ecommerce.model.Orden;
 import com.yuhr.ecommerce.model.Producto;
+import com.yuhr.ecommerce.model.Usuario;
+import com.yuhr.ecommerce.service.IUsuarioService;
 import com.yuhr.ecommerce.service.ProductoService;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -28,6 +30,9 @@ public class HomeController {
 
     @Autowired
     private ProductoService productoService;
+
+    @Autowired
+    private IUsuarioService usuarioService;
 
     //Para almacenar los detalles de las orden
     List<DetalleOrden> detalles = new ArrayList<DetalleOrden>();
@@ -126,12 +131,18 @@ public class HomeController {
 
         model.addAttribute("cart", detalles);
         model.addAttribute("orden", orden);
-
+        
         return "usuario/carrito";
     }
-
+    
     @GetMapping("/order")
-    public String order() {
+    public String order(Model model) {
+
+        Usuario usuario = usuarioService.findById(1).get();
+
+        model.addAttribute("cart", detalles);
+        model.addAttribute("orden", orden);
+        model.addAttribute("usuario", usuario);
         
         return "usuario/resumenorden";
     }
