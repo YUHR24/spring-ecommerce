@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.yuhr.ecommerce.model.Orden;
+import com.yuhr.ecommerce.model.Usuario;
 import com.yuhr.ecommerce.repository.IOrdenRepository;
 
 @Service
@@ -82,6 +83,12 @@ public class OrdenServiceImpl implements IOrdenService{
         numeroConcatenado = String.format("%010d", numero);
     
         return numeroConcatenado;
+    }
+
+    @Override
+    public List<Orden> findByUsuario(Usuario usuario) {
+        
+        return ordenRepository.findByUsuario(usuario);
     }
     
 
