@@ -1,6 +1,7 @@
 package com.yuhr.ecommerce.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,6 +19,8 @@ import com.yuhr.ecommerce.model.DetalleOrden;
 import com.yuhr.ecommerce.model.Orden;
 import com.yuhr.ecommerce.model.Producto;
 import com.yuhr.ecommerce.model.Usuario;
+import com.yuhr.ecommerce.service.IDetalleOrdenService;
+import com.yuhr.ecommerce.service.IOrdenService;
 import com.yuhr.ecommerce.service.IUsuarioService;
 import com.yuhr.ecommerce.service.ProductoService;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,6 +36,12 @@ public class HomeController {
 
     @Autowired
     private IUsuarioService usuarioService;
+
+    @Autowired
+    private IOrdenService ordenService;
+
+    @Autowired
+    private IDetalleOrdenService detalleOrdenService;
 
     //Para almacenar los detalles de las orden
     List<DetalleOrden> detalles = new ArrayList<DetalleOrden>();
@@ -146,6 +155,34 @@ public class HomeController {
         
         return "usuario/resumenorden";
     }
+
+    //GUARDAR LA ORDEN
+    @GetMapping("/saveOrder")
+    public String saveOrder() {
+        
+        Date fechaCreacion = new Date();
+        orden.setFechaCreacion(fechaCreacion);
+        orden.setNumero(ordenService.generarNumeroOrden());
+
+        //usuario / referencia del usuario
+        Usuario usuario = usuarioService.findById(1).get();
+
+        orden.setUsuario(usuario);
+        ordenService.save(orden);
+
+        //guardar detalles
+        for (DetalleOrden dt : detalles) {
+            dt.setOrden(orden);
+            detalleOrdenService.save(dt);
+        }
+
+        //limpiar lista y orden
+        orden = new Orden();
+        detalles.clear();
+
+        return "redirect:/";
+    }
+    
 
     
 
