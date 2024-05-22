@@ -98,7 +98,6 @@ public class UsuarioController {
 
         model.addAttribute("detalles", orden.get().getDetalle());
 
-
         //Session
         model.addAttribute("session", session.getAttribute("idusuario"));
 
